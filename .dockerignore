@@ -19,3 +19,10 @@ __pycache__
 # Exclude some weights
 /openai
 /liuhaotian
+
+# Exclude datasets, docs, and others
+/playground/data
+/demo
+/docs
+/images
+/wandb
