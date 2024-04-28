@@ -24,6 +24,10 @@ wandb
 output
 demo
 
+# singularity
+*.sif
+*.simg
+
 checkpoints
 ckpts*
 
