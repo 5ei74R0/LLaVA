@@ -6,6 +6,7 @@ MODEL_BASE=${2:-$(python3 -c "import json; print(json.load(open('$MODEL_PATH/con
 python -m llava.eval.model_vqa_loader \
     --model-path $MODEL_PATH \
     --model-base $MODEL_BASE \
+    --use-flash-attn \
     --question-file ./playground/data/eval/pope/llava_pope_test.jsonl \
     --image-folder ./playground/data/eval/pope/val2014 \
     --answers-file ./playground/data/eval/pope/answers/llava-v1.5-7b-lora.jsonl \
