@@ -82,7 +82,7 @@ def eval_model(args):
     model_path = os.path.expanduser(args.model_path)
     model_name = get_model_name_from_path(model_path)
     tokenizer, model, image_processor, context_len = load_pretrained_model(
-        model_path, args.model_base, model_name, args.use_flash_attn
+        model_path, args.model_base, model_name, load_8bit=args.load_8bit, use_flash_attn=args.use_flash_attn
     )
 
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
@@ -132,6 +132,7 @@ if __name__ == "__main__":
     parser.add_argument("--model-path", type=str, default="facebook/opt-350m")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--use-flash-attn", action="store_true", default=False)
+    parser.add_argument("--load-8bit", action="store_true", default=False)
     parser.add_argument("--image-folder", type=str, default="")
     parser.add_argument("--question-file", type=str, default="tables/question.jsonl")
     parser.add_argument("--answers-file", type=str, default="answer.jsonl")
