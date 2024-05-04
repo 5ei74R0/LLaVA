@@ -9,7 +9,7 @@ MODEL_PATH=${1:-"./checkpoints/llava-v1.5-7b-lora"}
 MODEL_BASE=${2:-$(python3 -c "import json; print(json.load(open('$MODEL_PATH/config.json'))['_name_or_path'])")}
 
 CKPT=$(basename $MODEL_PATH)
-SPLIT="llava_vqav2_mscoco_test-dev2015"
+SPLIT="llava_vqav2_mscoco_test-dev2015"  # "llava_vqav2_mscoco_test-dev2015" or "llava_vqav2_mscoco_test2015"
 
 for IDX in $(seq 0 $((CHUNKS-1))); do
     CUDA_VISIBLE_DEVICES=${GPULIST[$IDX]} python -m llava.eval.model_vqa_loader \
