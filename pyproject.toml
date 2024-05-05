@@ -1,37 +1,86 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "llava"
-version = "1.2.2.post1"
-description = "Towards GPT-4 like large language and visual assistant."
-readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: Apache Software License",
-]
+version = "0.1.0"
+description = "Forked from haotian-liu/LLaVA; Towards GPT-4 like large language and visual assistant."
 dependencies = [
-    "torch==2.1.2", "torchvision==0.16.2",
-    "transformers==4.37.2", "tokenizers==0.15.1", "sentencepiece==0.1.99", "shortuuid",
-    "accelerate==0.21.0", "peft", "bitsandbytes",
-    "pydantic", "markdown2[all]", "numpy", "scikit-learn==1.2.2",
-    "gradio==4.16.0", "gradio_client==0.8.1",
-    "requests", "httpx==0.24.0", "uvicorn", "fastapi",
-    "einops==0.6.1", "einops-exts==0.0.4", "timm==0.6.13",
+    "torch==2.2.2+cu118",
+    "torchvision==0.17.2+cu118",
+    "transformers @ git+https://github.com/huggingface/transformers",
+    "tokenizers>=0.19.1",
+    "sentencepiece>=0.2.0",
+    "shortuuid>=1.0.13",
+    "accelerate>=0.30.0",
+    "peft>=0.10.0",
+    "bitsandbytes>=0.43.1",
+    "pydantic>=2.7.1",
+    "numpy>=1.26.4",
+    "markdown2>=2.4.13",
+    "scikit-learn>=1.4.2",
+    "gradio>=4.29.0",
+    "gradio_client>=0.16.1",
+    "requests>=2.31.0",
+    "httpx>=0.27.0",
+    "uvicorn>=0.29.0",
+    "fastapi>=0.111.0",
+    "einops>=0.8.0",
+    "einops-exts>=0.0.4",
+    "timm>=0.9.16",
+    "openai>=1.25.1",
+    "deepspeed>=0.14.2",
+    "ninja>=1.11.1.1",
+    "wandb>=0.16.6",
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+
+[build-system]
+requires = ["hatchling<=1.18.0"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.4.3",
 ]
 
-[project.optional-dependencies]
-train = ["deepspeed==0.12.6", "ninja", "wandb"]
-build = ["build", "twine"]
+[[tool.rye.sources]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu118"
 
-[project.urls]
-"Homepage" = "https://llava-vl.github.io"
-"Bug Tracker" = "https://github.com/haotian-liu/LLaVA/issues"
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool.setuptools.packages.find]
-exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+[tool.hatch.build.targets.wheel]
+packages = ["llava"]
 
-[tool.wheel]
-exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+# Following settings trace huggingface/transfomers v4.38.0 and are partially modified.
+# ruff==0.1.5
+# (https://github.com/huggingface/transformers/blob/v4.38.0/pyproject.toml)
+[tool.ruff]
+# Never enforce `E501` (line length violations).
+ignore = ["C901", "E501", "E741", "F402", "F823" ]
+select = ["C", "E", "F", "I", "W"]
+line-length = 119
+
+# Ignore import violations in all `__init__.py` files.
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F401", "F403", "F811"]
+"src/transformers/file_utils.py" = ["F401"]
+"src/transformers/utils/dummy_*.py" = ["F401"]
+
+[tool.ruff.isort]
+lines-after-imports = 2
+known-first-party = ["causal_lm"]
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"

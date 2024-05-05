@@ -15,6 +15,7 @@ __pycache__
 
 # Exclude Python virtual environment
 /venv
+/.venv
 
 # Exclude some weights
 /openai
