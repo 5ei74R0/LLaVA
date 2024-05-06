@@ -25,11 +25,12 @@ RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 RUN pip install -U pip
 
 # Huggingface
-# (do `-v <persistent volume's TRANSFORMERS_CACHE>:/hub` to cache models and avoid downloading them every time)
-ENV TRANSFORMERS_CACHE /hub
+# (do `-v <persistent volume's HF_HUB_CACHE>:/hub` to cache models and avoid downloading them every time)
+# HF_HUB_CACHE: Defaults to "$HF_HOME/hub"; HF_HOME: Defaults to "$HOME/.cache/huggingface"
+ENV HF_HUB_CACHE /hub
 
 # Setup LLaVA
 WORKDIR /src
 COPY . /src
-RUN pip install -e .[train]
+RUN pip install -e . --extra-index-url https://download.pytorch.org/whl/cu118
 RUN pip install flash-attn --no-build-isolation
