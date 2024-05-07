@@ -375,7 +375,7 @@ conv_mistral_instruct = Conversation(
     sep2="</s>",
 )
 
-conv_phi_instruct = Conversation(
+conv_phi3_instruct = Conversation(
     system="",
     roles=("USER", "ASSISTANT"),
     version="phi3",
@@ -405,7 +405,7 @@ conv_templates = {
     "vicuna_v1": conv_vicuna_v1,
     "llama_2": conv_llama_2,
     "mistral_instruct": conv_mistral_instruct,
-    "phi_instruct": conv_phi_instruct,
+    "phi3_instruct": conv_phi3_instruct,
     "chatml_direct": conv_chatml_direct,
     "mistral_direct": conv_chatml_direct,
 

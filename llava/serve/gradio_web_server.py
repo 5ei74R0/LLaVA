@@ -173,6 +173,8 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request:
                     template_name = "chatml_direct"
                 else:
                     template_name = "mistral_instruct"
+            elif "phi3" in model_name.lower():
+                template_name = "phi3_instruct"
             elif 'llava-v1.6-34b' in model_name.lower():
                 template_name = "chatml_direct"
             elif "v1" in model_name.lower():
