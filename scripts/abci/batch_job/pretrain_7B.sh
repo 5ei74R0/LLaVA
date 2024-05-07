@@ -6,9 +6,9 @@
 #$ -v SSH_PORT=2299
 #$ -cwd
 
-TRANSFORMERS_CACHE=$(pwd)/hub
+HF_HUB_CACHE=$(pwd)/hub
 WANDB_KEY=$1
 
 source /etc/profile.d/modules.sh
 module load singularitypro
-singularity run --compat --nv -B $(pwd):/src -B $TRANSFORMERS_CACHE:/hub llava.sif WANDB_API_KEY=$WANDB_KEY sh scripts/v1_5/pretrain_7B.sh
+singularity run --compat --nv -B $(pwd):/src -B $HF_HUB_CACHE:/hub llava.sif WANDB_API_KEY=$WANDB_KEY sh scripts/v1_5/pretrain_7B.sh
