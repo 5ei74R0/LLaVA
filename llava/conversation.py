@@ -13,6 +13,7 @@ class SeparatorStyle(Enum):
     MPT = auto()
     PLAIN = auto()
     LLAMA_2 = auto()
+    PHI3 = auto()
 
 
 @dataclasses.dataclass
@@ -91,6 +92,22 @@ class Conversation:
                 else:
                     ret += ""
             ret = ret.lstrip(self.sep)
+        elif self.sep_style == SeparatorStyle.PHI3:
+            def wrap_phi3(msg, tag):  # tag: system, user, or assistant
+                f"<|{tag}|>{msg}<|end|>\n" if len(msg) > 0 else msg
+            ret = "" if self.system == "" else wrap_phi3(self.system, "system")
+            for i, (role, message) in enumerate(messages):
+                if message:
+                    if type(message) is tuple:
+                        message, _, _ = message
+                    if role == self.roles[0]:
+                        ret += wrap_phi3(message, "user")
+                    else:
+                        ret += wrap_phi3(message, "assistant")
+                else:
+                    ret += ""
+            ret += "<|assistant|>"
+
         elif self.sep_style == SeparatorStyle.PLAIN:
             seps = [self.sep, self.sep2]
             ret = self.system
@@ -358,6 +375,17 @@ conv_mistral_instruct = Conversation(
     sep2="</s>",
 )
 
+conv_phi_instruct = Conversation(
+    system="",
+    roles=("USER", "ASSISTANT"),
+    version="phi3",
+    messages=(),
+    offset=0,
+    sep_style=SeparatorStyle.PHI3,
+    sep="<s>",
+    sep2="<|endoftext|>",
+)
+
 conv_chatml_direct = Conversation(
     system="""<|im_start|>system
 Answer the questions.""",
@@ -377,6 +405,7 @@ conv_templates = {
     "vicuna_v1": conv_vicuna_v1,
     "llama_2": conv_llama_2,
     "mistral_instruct": conv_mistral_instruct,
+    "phi_instruct": conv_phi_instruct,
     "chatml_direct": conv_chatml_direct,
     "mistral_direct": conv_chatml_direct,
 
