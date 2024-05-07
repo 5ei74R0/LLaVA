@@ -3,13 +3,12 @@ FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get -y install wget curl
 
 ENV CUDA_HOME /usr/local/cuda
 
 # Install and update tools to minimize security vulnerabilities
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install software-properties-common wget apt-utils patchelf git libprotobuf-dev protobuf-compiler cmake
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install software-properties-common wget apt-utils patchelf git libprotobuf-dev protobuf-compiler cmake libaio-dev
 RUN unattended-upgrade
 RUN apt-get -y autoremove
 
