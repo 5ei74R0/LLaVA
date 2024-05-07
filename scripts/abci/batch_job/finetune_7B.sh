@@ -11,4 +11,4 @@ WANDB_KEY=<insert-api-key>  # Insert your Weights & Biases API key here ...
 
 source /etc/profile.d/modules.sh
 module load singularitypro
-singularity run --compat --nv -B $(pwd):/src -B $HF_HUB_CACHE:/hub --env WANDB_API_KEY=$WANDB_KEY llava.sif sh scripts/v1_5/finetune_7B.sh
+singularity run --compat --nv -B $(pwd)/tmp:/tmp -B $(pwd):/src -B $HF_HUB_CACHE:/hub --env WANDB_API_KEY=$WANDB_KEY llava.sif sh scripts/v1_5/finetune_7B.sh
