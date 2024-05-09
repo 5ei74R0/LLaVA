@@ -27,6 +27,8 @@ appdirs==1.4.4
 attrs==23.2.0
     # via jsonschema
     # via referencing
+av==12.0.0
+    # via llava
 bitsandbytes==0.43.1
     # via llava
 certifi==2024.2.2
@@ -44,6 +46,8 @@ contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1
     # via matplotlib
+decord==0.6.0
+    # via llava
 deepspeed==0.14.2
     # via llava
 distro==1.9.0
@@ -155,6 +159,7 @@ numpy==1.26.4
     # via altair
     # via bitsandbytes
     # via contourpy
+    # via decord
     # via deepspeed
     # via gradio
     # via llava
@@ -211,6 +216,7 @@ peft==0.10.0
     # via llava
 pillow==10.3.0
     # via gradio
+    # via llava
     # via matplotlib
     # via torchvision
 protobuf==4.25.3
